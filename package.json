@@ -1,5 +1,5 @@
 {
-  "name": "backend-sql",
+  "name": "jules-mcp",
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
@@ -9,9 +9,9 @@
     "watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Bkmaxbaibhav",
   "license": "ISC",
-  "description": "",
+  "description": "Jules MCP",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.26.0",
     "@types/node": "^25.0.9",
