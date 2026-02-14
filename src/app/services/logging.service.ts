@@ -1,0 +1,27 @@
+import winston from "winston";
+
+// Configure winston to use stderr instead of stdout
+winston.add(new winston.transports.Console({
+    stderrLevels: ['info', 'error', 'warn', 'debug'], // Send all levels to stderr
+    format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.timestamp(),
+        winston.format.printf(
+            (info: any) => `${info.timestamp} ${info.level}: ${info.message}`
+        )
+    )
+}));
+
+export default function logger(req: any, res: any, next: any) {
+    req.startTimeLog = Date.now();
+    
+    // Log start immediately
+    // winston.info(`Request Start: ${req.method} ${req.url}`);
+
+    res.on("finish", () => {
+        const timeTaken = Date.now() - req.startTimeLog;
+        winston.info(`Request End: ${res.statusCode} ${req.method} ${req.url} ${timeTaken}ms ${req.ip}`);
+    });
+    
+    next();
+}
