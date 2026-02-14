@@ -12,11 +12,11 @@ winston.add(new winston.transports.Console({
     )
 }));
 
-export default function logger(req: any, res: any, next: any) {
+function logger(req: any, res: any, next: any) {
     req.startTimeLog = Date.now();
     
     // Log start immediately
-    // winston.info(`Request Start: ${req.method} ${req.url}`);
+    winston.info(`Request Start: ${req.method} ${req.url}`);
 
     res.on("finish", () => {
         const timeTaken = Date.now() - req.startTimeLog;
@@ -24,4 +24,8 @@ export default function logger(req: any, res: any, next: any) {
     });
     
     next();
-}
+}           
+
+const log = { info: winston.info };
+
+export { log, logger };
