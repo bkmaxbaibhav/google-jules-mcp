@@ -8,6 +8,7 @@ export default {
     database: process.env.DB_NAME,
   },
   server: {
+    transport: process.env.TRANSPORT || "http",
     port: process.env.SERVER_PORT,
   },
 };

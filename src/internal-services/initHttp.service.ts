@@ -61,7 +61,7 @@ export default function initHttpServer() {
 
     const server:Server = createServer(app);
     server.listen(environments.server.port, () => {
-        console.warn(`HTTP server listening on port ${environments.server.port}`);
+        console.warn(`Server listening on port ${environments.server.port}`);
         tools.forEach((tool:Tool) => {
             log.info(`Registering tool: ${tool.name}`);
             mcpServer.registerTool(tool.name, tool.metaData, tool.handler);

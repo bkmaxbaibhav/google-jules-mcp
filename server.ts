@@ -1,28 +1,19 @@
 import { config } from "dotenv";
-config({ quiet: true });
+config();
 import environments from "./src/environments"
 import initHttpServer from "./src/internal-services/initHttp.service";
 import initStdioServer from "./src/internal-services/initStdio.service";
 
-// Redirect all standard logs to stderr immediately to avoid corrupting MCP stdout stream
-console.log = console.error;
-console.info = console.error;
-
 var global:any = globalThis;
 
 async function startServer(){ 
-  const transportType = process.env.TRANSPORT || "http";
-  const isStdio = transportType === "stdio";
-  
-  if (!isStdio) {
-    console.warn(`Starting server with ${transportType} transport...`);
-    console.warn(`Environment: ${environments.env_type}`);
-  }
+  // Always start HTTP server as it's the primary mode
+  await initHttpServer();
 
-  if (isStdio) {
+  // If TRANSPORT is set to stdio, also start the stdio interface
+  if (environments.server.transport === "stdio") {
+    console.error("Starting secondary STDIO transport...");
     await initStdioServer();
-  } else {
-    await initHttpServer();
   }
 }
 
