@@ -2,7 +2,7 @@ import winston from "winston";
 
 // Configure winston to use stderr instead of stdout
 winston.add(new winston.transports.Console({
-    stderrLevels: ['info', 'error', 'warn', 'debug'], // Send all levels to stderr
+    stderrLevels: ['info', 'error', 'warn', 'debug', 'verbose', 'silly'],
     format: winston.format.combine(
         winston.format.colorize(),
         winston.format.timestamp(),
