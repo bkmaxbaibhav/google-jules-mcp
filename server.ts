@@ -11,12 +11,7 @@ var global:any = globalThis;
 async function startServer(){ 
   console.warn("Starting server...")
   console.warn(`Environment: ${environments.env_type}`);
-  // Initialize PSQL
-  // await initializeDatabase();
-  // Initialize HTTP server
   const server = await initHttpServer();
-  // Initialize Socket.IO
-  // global.io = initSocketServer(server);
 }
 
 process.on("unhandledRejection", (reason:any, promise:any) => {

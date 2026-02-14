@@ -1,15 +1,19 @@
 {
   "name": "backend-sql",
   "version": "1.0.0",
-  "main": "server.ts",
+  "main": "dist/server.js",
   "scripts": {
+    "build": "rm -rf dist && tsc",
+    "start": "node dist/server.js",
     "dev": "nodemon --exec ts-node server.ts",
+    "watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "@types/node": "^25.0.9",
     "@types/winston": "^2.4.4",
     "dotenv": "^17.2.3",
@@ -20,7 +24,8 @@
     "sequelize": "^6.37.7",
     "socket.io": "^4.8.3",
     "ts-node": "^10.9.2",
-    "winston": "^3.19.0"
+    "winston": "^3.19.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/express": "^5.0.6"
