@@ -55,10 +55,13 @@ The MCP server uses a **stateful HTTP transport** mechanism:
 
 The server uses API Key authentication for the `/server/mcp` endpoint. 
 
-- **Header**: `x-api-key`
-- **Default Key**: `jules-secret-key` (configurable via `MCP_API_KEY` environment variable)
+- **Option A (Header)**: Include the `x-api-key` header.
+- **Option B (URL/Query Parameter)**: Append `?apiKey=YOUR_KEY` to the URL. This is ideal for clients that don't support custom headers (e.g., some ChatGPT/Claude MCP setups).
 
-All requests to the MCP endpoints must include this header.
+**Example URL with key:**
+`http://localhost:3000/server/mcp?apiKey=jules-secret-key`
+
+- **Default Key**: `jules-secret-key` (configurable via `MCP_API_KEY` environment variable)
 
 ### Key Components
 
