@@ -18,4 +18,5 @@ export default async function initStdioServer() {
     const transport = new StdioServerTransport();
     await mcpServer.connect(transport);
     console.error("MCP Server running on stdio");
+    return mcpServer;
 }
