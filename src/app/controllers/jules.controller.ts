@@ -15,14 +15,21 @@ export async function getSources() {
 
 export async function listSessions() {
     const params = {
-        pageSize: 5
+        pageSize: 2
     }
     const response = await get(API_PATHS.LIST_SESSIONS, params);
+    const essentialSessions = response.data.sessions.map((session: any) => ({
+        id: session.id,
+        name: session.name,
+        title: session.title,
+        state: session.state,
+        createTime: session.createTime
+    }));
     return {
         content: [
             {
                 type: "text",
-                text: JSON.stringify(response.data.sessions, null, 2)
+                text: JSON.stringify(essentialSessions, null, 2)
             }
         ]
     };
