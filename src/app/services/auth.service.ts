@@ -10,11 +10,17 @@ export const validateApiKey = (req: Request, res: Response, next: NextFunction) 
         return next();
     }
 
-    // Check for API key in headers OR query parameters (useful for clients that don't support custom headers)
+    // 1. Check for custom header
     const apiKeyHeader = req.headers["x-api-key"];
+    
+    // 2. Check for standard Authorization header (Bearer token)
+    const authHeader = req.headers["authorization"];
+    const bearerToken = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : null;
+    
+    // 3. Check for query parameter
     const apiKeyQuery = req.query.apiKey;
     
-    const apiKey = apiKeyHeader || apiKeyQuery;
+    const apiKey = apiKeyHeader || bearerToken || apiKeyQuery;
     const validApiKey = process.env.MCP_API_KEY || "jules-secret-key";
 
     if (!apiKey || apiKey !== validApiKey) {
@@ -22,7 +28,7 @@ export const validateApiKey = (req: Request, res: Response, next: NextFunction) 
             jsonrpc: "2.0",
             error: {
                 code: -32001,
-                message: "Unauthorized: Invalid or missing API Key. Provide it in 'x-api-key' header or 'apiKey' query parameter."
+                message: "Unauthorized: Invalid or missing API Key. Use x-api-key header, Authorization Bearer token, or apiKey query param."
             },
             id: req.body?.id || null
         });

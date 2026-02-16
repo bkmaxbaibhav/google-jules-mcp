@@ -10,4 +10,8 @@ export default {
   server: {
     port: process.env.SERVER_PORT,
   },
+  jules: {
+    apiKey: process.env.JULES_API_KEY,
+    baseUrl: process.env.JULES_BASE_URL,
+  },
 };

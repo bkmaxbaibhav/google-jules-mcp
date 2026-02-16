@@ -16,6 +16,7 @@
     "@modelcontextprotocol/sdk": "^1.26.0",
     "@types/node": "^25.0.9",
     "@types/winston": "^2.4.4",
+    "axios": "^1.13.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "nodemon": "^3.1.11",
