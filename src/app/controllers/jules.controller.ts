@@ -13,9 +13,9 @@ export async function getSources() {
     };
 }
 
-export async function listSessions() {
+export async function listSessions(payload: any) {
     const params = {
-        pageSize: 2
+        pageSize: payload.pageSize
     }
     const response = await get(API_PATHS.LIST_SESSIONS, params);
     const essentialSessions = response.data.sessions.map((session: any) => ({

@@ -1,5 +1,6 @@
 import { Tool } from "../interfaces/tools.interface";
 import { getSources, listSessions } from "../controllers/jules.controller";
+import { z } from "zod";
 
 const julesTools:Tool[] = [
     {
@@ -13,6 +14,11 @@ const julesTools:Tool[] = [
         name: "list_sessions",
         metaData: {
             description: "List sessions from Jules API [ A session is a conversation between the user and the agent. ]",
+            inputSchema: {
+                pageSize: z
+                .number()
+                .describe("Number of sessions to list"),
+            },
         },
         handler: listSessions
     }
