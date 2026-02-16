@@ -14,6 +14,7 @@ This MCP server demonstrates how to build a production-ready MCP server with HTT
 ## Features
 
 - ✅ HTTP Transport with session management
+- ✅ API Key Authentication
 - ✅ Server-Sent Events (SSE) support for notifications
 - ✅ Proper session lifecycle management
 - ✅ Tool registration and execution
@@ -49,6 +50,15 @@ The MCP server uses a **stateful HTTP transport** mechanism:
 3. **Session Reuse**: Subsequent requests include the `mcp-session-id` header to reuse the same server instance
 4. **Tool Execution**: Tools are executed within the session context
 5. **Session Termination**: Client sends DELETE request to clean up the session
+
+### Authentication
+
+The server uses API Key authentication for the `/server/mcp` endpoint. 
+
+- **Header**: `x-api-key`
+- **Default Key**: `jules-secret-key` (configurable via `MCP_API_KEY` environment variable)
+
+All requests to the MCP endpoints must include this header.
 
 ### Key Components
 
@@ -106,6 +116,7 @@ Here's a complete workflow to test the MCP server manually using curl:
 curl -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: YOUR_API_KEY" \
   -i \
   -d '{
     "jsonrpc": "2.0",
@@ -155,10 +166,11 @@ mcp-session-id: 550e8400-e29b-41d4-a716-446655440000
 After receiving the initialize response, send the initialized notification:
 
 ```bash
-# Replace SESSION_ID with the actual session ID from Step 1
+# Replace SESSION_ID and YOUR_API_KEY
 curl -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: YOUR_API_KEY" \
   -H "mcp-session-id: SESSION_ID" \
   -d '{
     "jsonrpc": "2.0",
@@ -174,6 +186,7 @@ curl -X POST http://localhost:3000/server/mcp \
 curl -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: YOUR_API_KEY" \
   -H "mcp-session-id: SESSION_ID" \
   -d '{
     "jsonrpc": "2.0",
@@ -210,6 +223,7 @@ curl -X POST http://localhost:3000/server/mcp \
 curl -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: YOUR_API_KEY" \
   -H "mcp-session-id: SESSION_ID" \
   -d '{
     "jsonrpc": "2.0",
@@ -253,6 +267,7 @@ This keeps the connection open and streams events as they occur.
 
 ```bash
 curl -X DELETE http://localhost:3000/server/mcp \
+  -H "x-api-key: YOUR_API_KEY" \
   -H "mcp-session-id: SESSION_ID"
 ```
 

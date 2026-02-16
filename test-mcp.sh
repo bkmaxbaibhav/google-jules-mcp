@@ -5,6 +5,9 @@
 
 set -e  # Exit on error
 
+# Configuration
+API_KEY="jules-secret-key"
+
 echo "╔════════════════════════════════════════════════════════════╗"
 echo "║         MCP Server Test - Complete Workflow               ║"
 echo "╚════════════════════════════════════════════════════════════╝"
@@ -17,6 +20,7 @@ echo "└───────────────────────�
 RESPONSE=$(curl -s -i -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: $API_KEY" \
   -d '{
     "jsonrpc": "2.0",
     "id": 1,
@@ -62,6 +66,7 @@ echo "└───────────────────────�
 INIT_RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: $API_KEY" \
   -H "mcp-session-id: $SESSION_ID" \
   -d '{
     "jsonrpc": "2.0",
@@ -93,6 +98,7 @@ echo "└───────────────────────�
 TOOLS_RESPONSE=$(curl -s -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: $API_KEY" \
   -H "mcp-session-id: $SESSION_ID" \
   -d '{
     "jsonrpc": "2.0",
@@ -119,6 +125,7 @@ echo "└───────────────────────�
 TOOL_RESPONSE=$(curl -s -X POST http://localhost:3000/server/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
+  -H "x-api-key: $API_KEY" \
   -H "mcp-session-id: $SESSION_ID" \
   -d '{
     "jsonrpc": "2.0",
@@ -148,6 +155,7 @@ echo "┌───────────────────────�
 echo "│ Step 5: Terminate Session                                  │"
 echo "└─────────────────────────────────────────────────────────────┘"
 DELETE_RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X DELETE http://localhost:3000/server/mcp \
+  -H "x-api-key: $API_KEY" \
   -H "mcp-session-id: $SESSION_ID")
 
 HTTP_STATUS=$(echo "$DELETE_RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)

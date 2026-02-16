@@ -35,6 +35,8 @@ function isInitializeRequest(body: any): boolean {
     return body?.method === "initialize";
 }
 
+import { validateApiKey } from "../app/services/auth.service";
+
 export default function initHttpServer() {
     const app = express();
 
@@ -47,6 +49,9 @@ export default function initHttpServer() {
         res.status(200);
         res.send("Server is up and running");
     });
+
+    // Apply API key validation to all /server/mcp endpoints
+    app.use("/server/mcp", validateApiKey);
 
     app.post("/server/mcp", async (req: Request, res: Response) => {
         const sessionId = req.headers['mcp-session-id'] as string | undefined;
