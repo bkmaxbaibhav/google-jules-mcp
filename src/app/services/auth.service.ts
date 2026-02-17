@@ -36,17 +36,21 @@ export const validateApiKey = (req: Request, res: Response, next: NextFunction) 
         });
     }
 
-    // Now check if authenticated via OTP (except for the authenticate tool, initialize, or GET requests for SSE)
-    const isAuthRequest = (req.body?.method === "tools/call" && req.body?.params?.name === "authenticate") || 
-                         (req.body?.method === "initialize") ||
-                         (req.method === "GET");
+    // Allow discovery methods (initialize, list tools, etc.) without TOTP
+    // Only require TOTP for "actionable" methods like tools/call (except for authenticate)
+    const isToolCall = req.body?.method === "tools/call";
+    const isAuthenticateTool = isToolCall && req.body?.params?.name === "authenticate";
     
-    if (!isAuthRequest && !sessionService.isAuthenticated()) {
+    // Check if the method requires TOTP authentication
+    // Currently, only non-auth tool calls are restricted
+    const requiresTotp = isToolCall && !isAuthenticateTool;
+    
+    if (requiresTotp && !sessionService.isAuthenticated()) {
         return res.status(401).json({
             jsonrpc: "2.0",
             error: {
                 code: -32002,
-                message: "Session expired or not authenticated. Please use the 'authenticate' tool with your Google Authenticator OTP to enable tools for 30 minutes."
+                message: "TOTP Authentication Required: Use the 'authenticate' tool with your Google Authenticator OTP to enable tool execution for 30 minutes."
             },
             id: req.body?.id || null
         });

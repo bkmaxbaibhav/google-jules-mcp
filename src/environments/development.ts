@@ -11,7 +11,7 @@ export default {
     port: process.env.SERVER_PORT,
   },
   mcp: {
-    apiKey: process.env.MCP_API_KEY || Date.now().toString() ,
+    apiKey: process.env.MCP_API_KEY || "jules-secret-key",
     totpSecret: process.env.TOTP_SECRET || "AAABRACADABRA", // Default secret for testing if not provided
   },
   jules: {
