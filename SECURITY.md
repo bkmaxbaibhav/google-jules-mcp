@@ -13,4 +13,4 @@ Currently, the following versions of Jules MCP are supported with security updat
 If you discover a potential security vulnerability in this project, please report it immediately to the maintainers.
 
 **Please do not open a public issue.** .
-**Resporting instructions will be added soon**
+**Reporting instructions will be added soon**
