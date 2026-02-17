@@ -11,3 +11,9 @@ export function get(apiPath: string, params = {}) {
         params,
     });
 }
+
+export function post(apiPath: string, data = {}) {
+    return axios.post(environments.jules.baseUrl + apiPath, data, {
+        headers,
+    });
+}
