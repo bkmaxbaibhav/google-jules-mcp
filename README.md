@@ -21,7 +21,7 @@ A specialized Model Context Protocol (MCP) server that acts as a secure bridge t
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/bkmaxbaibhav/jules-mcp.git
+   git clone https://github.com/bkmaxbaibhav/google-jules-mcp.git
    cd jules-mcp
    ```
 
